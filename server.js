@@ -57,8 +57,8 @@ app.use(session({
     cookie: {
         maxAge: Number(SS.SS_SESS_LIFETIME),
         sameSite: 'lax', 
-        secure: false, //change to true once in build? Will only set a cookie if the browser is https - we can enforce this in the build?
-        domain: "localhost",
+        secure: true,
+        domain: DB.DB_HOST,
         httpOnly: true,
         hostOnly: false,
     } 
