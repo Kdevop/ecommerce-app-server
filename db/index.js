@@ -10,6 +10,8 @@ const pool = new Pool({
     port: DB.DB_PORT
 });
 
+console.log('this is the pool for queries.', pool);
+
 
 module.exports = {
     query: (text, params) => pool.query(text, params)

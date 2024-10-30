@@ -58,7 +58,7 @@ app.use(session({
         maxAge: Number(SS.SS_SESS_LIFETIME),
         sameSite: 'lax', 
         secure: true,
-        domain: DB.DB_HOST,
+        domain: "localhost",
         httpOnly: true,
         hostOnly: false,
     } 
