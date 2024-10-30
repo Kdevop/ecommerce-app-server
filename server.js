@@ -16,6 +16,8 @@ const { cartRouter } = require('./routes/cartRoute.js');
 //server setup
 const app = express();
 
+app.set('trust proxy', 1)
+
 // Used for testing to make sure server / express app is running.
 app.get('/', (req, res, next) => {
     res.send('<h1>Hello Kiernan</h1>');
