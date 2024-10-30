@@ -7,7 +7,7 @@ const getAllProducts = async (req, res) => {
     try {
         const products = await productsQueries.getAllFromSchema();
         if (products.error) {
-            res.status(400).json({ success: false, message: 'Error collecting products' });
+            res.status(400).json({ success: false, message: products.message });
         }
         else {
             res.status(200).json({ success: true, message: 'Products returned', data: products.data });
