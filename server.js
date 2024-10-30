@@ -44,8 +44,6 @@ const options = {
     createTableIfMissing: true
 };
 
-console.log(options); //After testing this line can be deleted.
-
 const sessionStore = new pgSession(options);
 
 app.use(session({

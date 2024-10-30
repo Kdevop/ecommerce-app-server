@@ -18,4 +18,3 @@ module.exports = {
     }
 };
 
-console.log("config.js reads " + process.env.DB_USER)
