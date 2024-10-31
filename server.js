@@ -60,7 +60,7 @@ app.use(session({
         maxAge: Number(SS.SS_SESS_LIFETIME),
         sameSite: 'lax', 
         secure: true,
-        domain: "https://ecommerce-quick.onrender.com", 
+        domain: "ecommerce-quick.onrender.com", 
         httpOnly: true,
         hostOnly: false,
     } 
