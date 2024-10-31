@@ -24,7 +24,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.use(cors({
-    origin: "https://ecommerce-quick.onrender.com/",
+    origin: "https://ecommerce-quick.onrender.com",
     methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'DELETE', 'HEAD'],
     credentials: true,
 }));
@@ -60,7 +60,7 @@ app.use(session({
         maxAge: Number(SS.SS_SESS_LIFETIME),
         sameSite: 'lax', 
         secure: true,
-        domain: "https://ecommerce-quick.onrender.com/", 
+        domain: "https://ecommerce-quick.onrender.com", 
         httpOnly: true,
         hostOnly: false,
     } 
@@ -73,7 +73,7 @@ initializePassport(passport);
 
 //configuration to allow the front end to store cookies created on the server:
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "https://ecommerce-quick.onrender.com/"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Origin", "https://ecommerce-quick.onrender.com"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Credentials", true); // allows cookie to be sent
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, HEAD, DELETE"); // you must specify the methods used with credentials. "*" will not work. 
