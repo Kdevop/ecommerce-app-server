@@ -22,6 +22,8 @@ module.exports = (passport) => {
 
                 const foundUser = userResult.rows[0];
 
+                console.log('This is the found user from auth.js', foundUser)
+
                 const isMatch = await bcrypt.compare(password, foundUser.password);
                 if (isMatch) {
                     return done(null, { //rather than an object here, does it just need to say 'user' after null?
