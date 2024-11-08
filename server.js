@@ -12,6 +12,7 @@ const { DB, SS } =require('./config');
 const { registerRouter, signinRouter, logoutRouter, orderRouter, userRouter, checkRouter } = require('./routes/userRoute.js');
 const { productRouter } = require('./routes/productRoute.js');
 const { cartRouter } = require('./routes/cartRoute.js');
+const pgPool = require('../ecommerce-app-server/db/index.js')
 
 //server setup
 const app = express();
@@ -51,10 +52,11 @@ console.log("these are the details from options server.js",options);
 const sessionStore = new pgSession(options);
 
 app.use(session({
-    name: SS.SS_SESS_NAME,
+    store: new pgSession({
+        pool: pgPool,
+    }),
     resave: false, 
     saveUninitialized: false, 
-    store: sessionStore,
     secret: SS.SS_SESS_SECRET,
     cookie: {
         maxAge: Number(SS.SS_SESS_LIFETIME),
@@ -98,3 +100,33 @@ app.use('/api/cart', cartRouter)
 app.listen(port, () => {
     console.log(`Your server is listening on port: ${port}`);
 });
+
+// const options = {
+//     user: DB.DB_USER, 
+//     host: DB.DB_HOST,
+//     database: DB.DB_DATABASE,
+//     password: DB.DB_PASSWORD,
+//     port: DB.DB_PORT,
+//     createDatabaseTable: true,
+//     createTableIfMissing: true
+// };
+
+// console.log("these are the details from options server.js",options);
+
+// const sessionStore = new pgSession(options);
+
+// app.use(session({
+//     name: SS.SS_SESS_NAME,
+//     resave: false, 
+//     saveUninitialized: false, 
+//     store: sessionStore,
+//     secret: SS.SS_SESS_SECRET,
+//     cookie: {
+//         maxAge: Number(SS.SS_SESS_LIFETIME),
+//         sameSite: 'lax', 
+//         secure: true,
+//         domain: "ecommerce-quick.onrender.com", 
+//         httpOnly: true,
+//         hostOnly: false,
+//     } 
+// }));
