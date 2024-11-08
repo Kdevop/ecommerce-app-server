@@ -12,7 +12,7 @@ const { DB, SS } =require('./config');
 const { registerRouter, signinRouter, logoutRouter, orderRouter, userRouter, checkRouter } = require('./routes/userRoute.js');
 const { productRouter } = require('./routes/productRoute.js');
 const { cartRouter } = require('./routes/cartRoute.js');
-const pool = require('.db/index')
+const pool = require('./db/index')
 
 //server setup
 const app = express();
@@ -40,6 +40,7 @@ app.use(session({
     store: new pgSession({
         pool: pool,
     }),
+    name: SS.SS_SESS_NAME,
     resave: false, 
     saveUninitialized: false, 
     secret: SS.SS_SESS_SECRET,
