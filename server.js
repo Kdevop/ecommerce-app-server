@@ -12,7 +12,7 @@ const { DB, SS } =require('./config');
 const { registerRouter, signinRouter, logoutRouter, orderRouter, userRouter, checkRouter } = require('./routes/userRoute.js');
 const { productRouter } = require('./routes/productRoute.js');
 const { cartRouter } = require('./routes/cartRoute.js');
-const pgPool = require('../ecommerce-app-server/db/index.js')
+const pool = require('.db/index')
 
 //server setup
 const app = express();
@@ -36,24 +36,9 @@ const port = PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-const options = {
-    user: DB.DB_USER, 
-    host: DB.DB_HOST,
-    database: DB.DB_DATABASE,
-    password: DB.DB_PASSWORD,
-    port: DB.DB_PORT,
-    createDatabaseTable: true,
-    createTableIfMissing: true
-};
-
-console.log("these are the details from options server.js",options);
-
-const sessionStore = new pgSession(options);
-
 app.use(session({
     store: new pgSession({
-        pool: pgPool,
+        pool: pool,
     }),
     resave: false, 
     saveUninitialized: false, 
