@@ -6,7 +6,7 @@ const initializePassport = require('./controllers/auth.js');
 const helmet = require('helmet');
 const cors = require('cors');
 const session = require('express-session');
-const { DB, SS } =require('./config');
+const { SS } =require('./config');
 
 //route imports
 const { registerRouter, signinRouter, logoutRouter, orderRouter, userRouter, checkRouter } = require('./routes/userRoute.js');
@@ -26,9 +26,12 @@ app.get('/', (req, res, next) => {
 
 app.use(cors({
     origin: "https://ecommerce-quick.onrender.com",
+    //origin: "http://localhost:3000",
     methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'DELETE', 'HEAD'],
     credentials: true,
+    allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 }));
+
 app.use(helmet());
 const pgSession = require('connect-pg-simple')(session);
 const { PORT } =require('./config');
@@ -47,8 +50,9 @@ app.use(session({
     cookie: {
         maxAge: Number(SS.SS_SESS_LIFETIME),
         sameSite: 'lax', 
-        secure: true,
-        domain: "ecommerce-quick.onrender.com", 
+        secure: false,
+        domain: "ecommerce-quick.onrender.com",
+        //domain: "localhost", 
         httpOnly: true,
         hostOnly: false,
     } 
@@ -58,15 +62,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 initializePassport(passport);
-
-//configuration to allow the front end to store cookies created on the server:
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "https://ecommerce-quick.onrender.com"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Credentials", true); // allows cookie to be sent
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, HEAD, DELETE"); // you must specify the methods used with credentials. "*" will not work. 
-    next();
-});
 
 //route for users
 app.use('/api/users/register', registerRouter);
@@ -87,32 +82,3 @@ app.listen(port, () => {
     console.log(`Your server is listening on port: ${port}`);
 });
 
-// const options = {
-//     user: DB.DB_USER, 
-//     host: DB.DB_HOST,
-//     database: DB.DB_DATABASE,
-//     password: DB.DB_PASSWORD,
-//     port: DB.DB_PORT,
-//     createDatabaseTable: true,
-//     createTableIfMissing: true
-// };
-
-// console.log("these are the details from options server.js",options);
-
-// const sessionStore = new pgSession(options);
-
-// app.use(session({
-//     name: SS.SS_SESS_NAME,
-//     resave: false, 
-//     saveUninitialized: false, 
-//     store: sessionStore,
-//     secret: SS.SS_SESS_SECRET,
-//     cookie: {
-//         maxAge: Number(SS.SS_SESS_LIFETIME),
-//         sameSite: 'lax', 
-//         secure: true,
-//         domain: "ecommerce-quick.onrender.com", 
-//         httpOnly: true,
-//         hostOnly: false,
-//     } 
-// }));
