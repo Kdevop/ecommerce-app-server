@@ -49,12 +49,11 @@ app.use(session({
     secret: SS.SS_SESS_SECRET,
     cookie: {
         maxAge: Number(SS.SS_SESS_LIFETIME),
-        sameSite: 'lax', 
-        secure: false,
+        sameSite: 'none', 
+        secure: true,
         domain: "ecommerce-quick.onrender.com",
         //domain: "localhost", 
         httpOnly: true,
-        hostOnly: false,
     } 
 }));
 
